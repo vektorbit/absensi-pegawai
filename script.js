@@ -326,7 +326,7 @@ async function absen(status){
             }
           );
 
-        const text =
+       const text =
   await response.text();
 
 console.log(text);
@@ -336,12 +336,20 @@ const result =
 
 if(result.success){
 
-        if(result.success){
+  showStatus(
+    result.message,
+    'success'
+  );
 
-          showStatus(
-            result.message,
-            'success'
-          );
+  generateChallenge();
+
+}else{
+
+  showStatus(
+    result.message,
+    'error'
+  );
+}
 
           generateChallenge();
 
