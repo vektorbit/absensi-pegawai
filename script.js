@@ -21,42 +21,6 @@ const ctx =
 const statusBox =
   document.getElementById('status');
 
-const challengeBox =
-  document.getElementById('challengeBox');
-
-/****************************************
- * CHALLENGE
- ****************************************/
-
-const challenges = [
-  'SENYUM',
-  'KEDIP',
-  'TOLEH KANAN'
-];
-
-let currentChallenge = '';
-
-/****************************************
- * LOAD AI MODEL
- ****************************************/
-
-async function loadModels(){
-
- const MODEL_URL =
-  'https://raw.githubusercontent.com/vladmandic/face-api/master/model/';
-
-  await faceapi.nets.tinyFaceDetector
-    .loadFromUri(MODEL_URL);
-
-  await faceapi.nets.faceLandmark68Net
-    .loadFromUri(MODEL_URL);
-
-  await faceapi.nets.faceExpressionNet
-    .loadFromUri(MODEL_URL);
-
-  console.log('AI Model Loaded');
-}
-
 /****************************************
  * START CAMERA
  ****************************************/
@@ -73,12 +37,17 @@ async function startCamera(){
 
     video.srcObject = stream;
 
+    showStatus(
+      'Kamera aktif',
+      'success'
+    );
+
   }catch(err){
 
     console.error(err);
 
     showStatus(
-      'Kamera tidak diizinkan',
+      'Kamera gagal diakses',
       'error'
     );
   }
@@ -88,7 +57,10 @@ async function startCamera(){
  * STATUS
  ****************************************/
 
-function showStatus(text,type='info'){
+function showStatus(
+  text,
+  type='info'
+){
 
   let color = '#2563eb';
 
@@ -107,107 +79,12 @@ function showStatus(text,type='info'){
       padding:12px;
       border-radius:10px;
       margin-top:15px;
+      text-align:center;
+      font-weight:bold;
     ">
       ${text}
     </div>
   `;
-}
-
-/****************************************
- * RANDOM CHALLENGE
- ****************************************/
-
-function generateChallenge(){
-
-  const random =
-    Math.floor(
-      Math.random()*challenges.length
-    );
-
-  currentChallenge =
-    challenges[random];
-
-  challengeBox.innerHTML =
-    `Silakan lakukan:
-    ${currentChallenge}`;
-}
-
-/****************************************
- * FACE CHECK
- ****************************************/
-
-async function checkFaceChallenge(){
-
-  const detection =
-    await faceapi
-      .detectSingleFace(
-        video,
-        new faceapi.TinyFaceDetectorOptions()
-      )
-      .withFaceLandmarks()
-      .withFaceExpressions();
-
-  if(!detection){
-
-    showStatus(
-      'Wajah tidak terdeteksi',
-      'error'
-    );
-
-    return false;
-  }
-
-  const expressions =
-    detection.expressions;
-
-  const landmarks =
-    detection.landmarks;
-
-  /**************************************
-   * SENYUM
-   **************************************/
-
-  if(currentChallenge==='SENYUM'){
-
-    if(expressions.happy > 0.7){
-      return true;
-    }
-  }
-
-  /**************************************
-   * TOLEH KANAN
-   **************************************/
-
-  if(currentChallenge==='TOLEH KANAN'){
-
-    const nose =
-      landmarks.getNose();
-
-    if(nose[3].x > nose[0].x + 10){
-      return true;
-    }
-  }
-
-  /**************************************
-   * KEDIP
-   **************************************/
-
-  if(currentChallenge==='KEDIP'){
-
-    const eye =
-      landmarks.getLeftEye();
-
-    const eyeHeight =
-      Math.abs(
-        eye[1].y - eye[5].y
-      );
-
-    if(eyeHeight < 3){
-      return true;
-    }
-  }
-
-  return false;
 }
 
 /****************************************
@@ -272,91 +149,91 @@ async function absen(status){
     }
 
     showStatus(
-      'Memeriksa wajah...'
+      'Mengambil GPS...'
     );
-
-    const validFace = true;
-    if(!validFace){
-
-      showStatus(
-        'Challenge gagal',
-        'error'
-      );
-
-      return;
-    }
 
     navigator.geolocation.getCurrentPosition(
 
       async(position)=>{
 
-        const lat =
-          position.coords.latitude;
+        try{
 
-        const lng =
-          position.coords.longitude;
+          const lat =
+            position.coords.latitude;
 
-        const photo =
-          capturePhoto();
+          const lng =
+            position.coords.longitude;
 
-        showStatus(
-          'Mengirim absensi...'
-        );
-
-        const data = {
-          id:id,
-          nama:nama,
-          lat:lat,
-          lng:lng,
-          status:status,
-          challenge:currentChallenge,
-          device:navigator.userAgent,
-          photo:photo
-        };
-
-        const response =
-          await fetch(
-            GAS_URL,
-            {
-              method:'POST',
-              headers:{
-                'Content-Type':'application/json'
-              },
-              body:JSON.stringify(data)
-            }
-          );
-
-       const text =
-  await response.text();
-
-console.log(text);
-
-const result =
-  JSON.parse(text);
-
-if(result.success){
-
-  showStatus(
-    result.message,
-    'success'
-  );
-
-  generateChallenge();
-
-}else{
-
-  showStatus(
-    result.message,
-    'error'
-  );
-}
-
-          generateChallenge();
-
-        }else{
+          const photo =
+            capturePhoto();
 
           showStatus(
-            result.message,
+            'Mengirim absensi...'
+          );
+
+          const data = {
+
+            id:id,
+            nama:nama,
+
+            lat:lat,
+            lng:lng,
+
+            status:status,
+
+            device:
+              navigator.userAgent,
+
+            photo:photo
+          };
+
+          console.log(data);
+
+          const response =
+            await fetch(
+              GAS_URL,
+              {
+                method:'POST',
+
+                headers:{
+                  'Content-Type':
+                    'application/json'
+                },
+
+                body:
+                  JSON.stringify(data)
+              }
+            );
+
+          const text =
+            await response.text();
+
+          console.log(text);
+
+          const result =
+            JSON.parse(text);
+
+          if(result.success){
+
+            showStatus(
+              result.message,
+              'success'
+            );
+
+          }else{
+
+            showStatus(
+              result.message,
+              'error'
+            );
+          }
+
+        }catch(err){
+
+          console.error(err);
+
+          showStatus(
+            err.toString(),
             'error'
           );
         }
@@ -364,6 +241,8 @@ if(result.success){
       },
 
       (err)=>{
+
+        console.error(err);
 
         showStatus(
           'GPS gagal diakses',
@@ -390,14 +269,11 @@ if(result.success){
 
 async function init(){
 
-  // await loadModels();
-
   await startCamera();
 
-  generateChallenge();
-
   showStatus(
-    'Sistem siap'
+    'Sistem siap',
+    'success'
   );
 }
 
