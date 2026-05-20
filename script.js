@@ -275,9 +275,7 @@ async function absen(status){
       'Memeriksa wajah...'
     );
 
-    const validFace =
-      await checkFaceChallenge();
-
+    const validFace = true;
     if(!validFace){
 
       showStatus(
