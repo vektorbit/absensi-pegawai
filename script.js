@@ -42,8 +42,8 @@ let currentChallenge = '';
 
 async function loadModels(){
 
-  const MODEL_URL =
-    'https://cdn.jsdelivr.net/npm/@vladmandic/face-api/model/';
+ const MODEL_URL =
+  'https://raw.githubusercontent.com/vladmandic/face-api/master/model/';
 
   await faceapi.nets.tinyFaceDetector
     .loadFromUri(MODEL_URL);
@@ -382,7 +382,7 @@ if(result.success){
 
 async function init(){
 
-  await loadModels();
+  // await loadModels();
 
   await startCamera();
 
