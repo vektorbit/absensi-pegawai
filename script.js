@@ -162,16 +162,16 @@ async function absen(status){
 
           console.log(data);
 
-          const response =
-          await fetch(
-            GAS_URL,
-            {
-              method:'POST',
+         const response =
+await fetch(
+  GAS_URL,
+  {
+    method:'POST',
 
-              headers:{
-                'Content-Type':
-                'application/json'
-              },
+    body:
+    JSON.stringify(data)
+  }
+);
 
               body:
               JSON.stringify(data)
