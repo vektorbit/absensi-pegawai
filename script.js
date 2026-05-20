@@ -1,25 +1,17 @@
-/****************************************
- * CONFIG
- ****************************************/
-
 const GAS_URL =
-  'https://script.google.com/macros/s/AKfycbwag4f8mS1a22bJro1kUco7NGJo48R-_0LTSWxJ0N5Uh3D2gKS8X2XvWo2-C1fioTEy/exec';
-
-/****************************************
- * ELEMENT
- ****************************************/
+'https://script.google.com/macros/s/AKfycbwag4f8mS1a22bJro1kUco7NGJo48R-_0LTSWxJ0N5Uh3D2gKS8X2XvWo2-C1fioTEy/exec';
 
 const video =
-  document.getElementById('video');
+document.getElementById('video');
 
 const canvas =
-  document.getElementById('canvas');
+document.getElementById('canvas');
 
 const ctx =
-  canvas.getContext('2d');
+canvas.getContext('2d');
 
 const statusBox =
-  document.getElementById('status');
+document.getElementById('status');
 
 /****************************************
  * START CAMERA
@@ -30,10 +22,10 @@ async function startCamera(){
   try{
 
     const stream =
-      await navigator.mediaDevices.getUserMedia({
-        video:true,
-        audio:false
-      });
+    await navigator.mediaDevices.getUserMedia({
+      video:true,
+      audio:false
+    });
 
     video.srcObject = stream;
 
@@ -47,7 +39,7 @@ async function startCamera(){
     console.error(err);
 
     showStatus(
-      'Kamera gagal diakses',
+      'Kamera gagal',
       'error'
     );
   }
@@ -88,35 +80,21 @@ function showStatus(
 }
 
 /****************************************
- * CAPTURE PHOTO
+ * FOTO
  ****************************************/
 
 function capturePhoto(){
 
   canvas.width =
-    video.videoWidth;
+  video.videoWidth;
 
   canvas.height =
-    video.videoHeight;
+  video.videoHeight;
 
   ctx.drawImage(
     video,
     0,
     0
-  );
-
-  /**************************************
-   * WATERMARK
-   **************************************/
-
-  ctx.fillStyle = 'red';
-
-  ctx.font = '20px Arial';
-
-  ctx.fillText(
-    new Date().toLocaleString(),
-    20,
-    30
   );
 
   return canvas.toDataURL(
@@ -125,7 +103,7 @@ function capturePhoto(){
 }
 
 /****************************************
- * ABSENSI
+ * ABSEN
  ****************************************/
 
 async function absen(status){
@@ -133,15 +111,15 @@ async function absen(status){
   try{
 
     const id =
-      document.getElementById('id').value;
+    document.getElementById('id').value;
 
     const nama =
-      document.getElementById('nama').value;
+    document.getElementById('nama').value;
 
     if(!id || !nama){
 
       showStatus(
-        'ID dan Nama wajib diisi',
+        'Isi ID dan Nama',
         'error'
       );
 
@@ -159,13 +137,13 @@ async function absen(status){
         try{
 
           const lat =
-            position.coords.latitude;
+          position.coords.latitude;
 
           const lng =
-            position.coords.longitude;
+          position.coords.longitude;
 
           const photo =
-            capturePhoto();
+          capturePhoto();
 
           showStatus(
             'Mengirim absensi...'
@@ -175,43 +153,38 @@ async function absen(status){
 
             id:id,
             nama:nama,
-
             lat:lat,
             lng:lng,
-
             status:status,
-
-            device:
-              navigator.userAgent,
-
             photo:photo
+
           };
 
           console.log(data);
 
           const response =
-            await fetch(
-              GAS_URL,
-              {
-                method:'POST',
+          await fetch(
+            GAS_URL,
+            {
+              method:'POST',
 
-                headers:{
-                  'Content-Type':
-                    'application/json'
-                },
+              headers:{
+                'Content-Type':
+                'application/json'
+              },
 
-                body:
-                  JSON.stringify(data)
-              }
-            );
+              body:
+              JSON.stringify(data)
+            }
+          );
 
           const text =
-            await response.text();
+          await response.text();
 
           console.log(text);
 
           const result =
-            JSON.parse(text);
+          JSON.parse(text);
 
           if(result.success){
 
@@ -245,7 +218,7 @@ async function absen(status){
         console.error(err);
 
         showStatus(
-          'GPS gagal diakses',
+          'GPS gagal',
           'error'
         );
       }
@@ -267,16 +240,8 @@ async function absen(status){
  * INIT
  ****************************************/
 
-async function init(){
+window.onload = async()=>{
 
   await startCamera();
 
-  showStatus(
-    'Sistem siap',
-    'success'
-  );
-}
-
-window.onload = ()=>{
-  init();
 };
