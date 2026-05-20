@@ -3,7 +3,7 @@
  ****************************************/
 
 const GAS_URL =
-  'GANTI_DENGAN_WEB_APP_GAS';
+  'https://script.google.com/macros/s/AKfycbwag4f8mS1a22bJro1kUco7NGJo48R-_0LTSWxJ0N5Uh3D2gKS8X2XvWo2-C1fioTEy/exec';
 
 /****************************************
  * ELEMENT
