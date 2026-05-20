@@ -14,6 +14,52 @@ const statusBox =
 document.getElementById('status');
 
 /****************************************
+ * CHECK LOGIN
+ ****************************************/
+
+function checkLogin(){
+
+  const user =
+  JSON.parse(
+    localStorage.getItem(
+      'pegawai'
+    )
+  );
+
+  if(!user){
+
+    window.location =
+    'login.html';
+
+    return;
+  }
+
+  document.getElementById(
+    'userNama'
+  ).innerHTML =
+
+  `
+    <b>${user.nama}</b>
+    <br>
+    ${user.id}
+  `;
+}
+
+/****************************************
+ * LOGOUT
+ ****************************************/
+
+function logout(){
+
+  localStorage.removeItem(
+    'pegawai'
+  );
+
+  window.location =
+  'login.html';
+}
+
+/****************************************
  * START CAMERA
  ****************************************/
 
@@ -107,38 +153,26 @@ async function absen(status){
 
   try {
 
-   const user =
-JSON.parse(
-  localStorage.getItem(
-    'pegawai'
-  )
-);
+    const user =
+    JSON.parse(
+      localStorage.getItem(
+        'pegawai'
+      )
+    );
 
-if(!user){
+    if(!user){
 
-  window.location =
-  'login.html';
-
-  return;
-}
-
-const id =
-user.id;
-
-const nama =
-user.nama;
-    
-    
-    
-    {
-
-      showStatus(
-        'Isi ID dan Nama',
-        'error'
-      );
+      window.location =
+      'login.html';
 
       return;
     }
+
+    const id =
+    user.id;
+
+    const nama =
+    user.nama;
 
     showStatus(
       'Mengambil GPS...'
@@ -253,42 +287,3 @@ window.onload = async()=>{
   await startCamera();
 
 };
-
-
-function checkLogin(){
-
-  const user =
-  JSON.parse(
-    localStorage.getItem(
-      'pegawai'
-    )
-  );
-
-  if(!user){
-
-    window.location =
-    'login.html';
-
-    return;
-  }
-
-  document.getElementById(
-    'userNama'
-  ).innerHTML =
-
-  `
-    <b>${user.nama}</b>
-    <br>
-    ${user.id}
-  `;
-}
-
-function logout(){
-
-  localStorage.removeItem(
-    'pegawai'
-  );
-
-  window.location =
-  'login.html';
-}
