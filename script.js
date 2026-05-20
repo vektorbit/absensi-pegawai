@@ -107,13 +107,30 @@ async function absen(status){
 
   try {
 
-    const id =
-    document.getElementById('id').value;
+   const user =
+JSON.parse(
+  localStorage.getItem(
+    'pegawai'
+  )
+);
 
-    const nama =
-    document.getElementById('nama').value;
+if(!user){
 
-    if(!id || !nama){
+  window.location =
+  'login.html';
+
+  return;
+}
+
+const id =
+user.id;
+
+const nama =
+user.nama;
+    
+    
+    
+    {
 
       showStatus(
         'Isi ID dan Nama',
