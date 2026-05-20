@@ -19,7 +19,7 @@ document.getElementById('status');
 
 async function startCamera(){
 
-  try{
+  try {
 
     const stream =
     await navigator.mediaDevices.getUserMedia({
@@ -34,12 +34,12 @@ async function startCamera(){
       'success'
     );
 
-  }catch(err){
+  } catch(err){
 
     console.error(err);
 
     showStatus(
-      'Kamera gagal diakses',
+      'Kamera gagal',
       'error'
     );
   }
@@ -49,18 +49,15 @@ async function startCamera(){
  * STATUS
  ****************************************/
 
-function showStatus(
-  text,
-  type='info'
-){
+function showStatus(text,type='info'){
 
   let color = '#2563eb';
 
-  if(type==='success'){
+  if(type === 'success'){
     color = '#16a34a';
   }
 
-  if(type==='error'){
+  if(type === 'error'){
     color = '#dc2626';
   }
 
@@ -80,7 +77,7 @@ function showStatus(
 }
 
 /****************************************
- * CAPTURE PHOTO
+ * FOTO
  ****************************************/
 
 function capturePhoto(){
@@ -108,7 +105,7 @@ function capturePhoto(){
 
 async function absen(status){
 
-  try{
+  try {
 
     const id =
     document.getElementById('id').value;
@@ -134,7 +131,7 @@ async function absen(status){
 
       async(position)=>{
 
-        try{
+        try {
 
           const lat =
           position.coords.latitude;
@@ -145,10 +142,6 @@ async function absen(status){
           const photo =
           capturePhoto();
 
-          showStatus(
-            'Mengirim absensi...'
-          );
-
           const data = {
 
             id:id,
@@ -157,10 +150,13 @@ async function absen(status){
             lng:lng,
             status:status,
             photo:photo
-
           };
 
           console.log(data);
+
+          showStatus(
+            'Mengirim absensi...'
+          );
 
           const response =
           await fetch(
@@ -186,7 +182,7 @@ async function absen(status){
               'success'
             );
 
-          }else{
+          } else {
 
             showStatus(
               result.message,
@@ -194,7 +190,7 @@ async function absen(status){
             );
           }
 
-        }catch(err){
+        } catch(err){
 
           console.error(err);
 
@@ -211,14 +207,14 @@ async function absen(status){
         console.error(err);
 
         showStatus(
-          'GPS gagal diakses',
+          'GPS gagal',
           'error'
         );
       }
 
     );
 
-  }catch(err){
+  } catch(err){
 
     console.error(err);
 
