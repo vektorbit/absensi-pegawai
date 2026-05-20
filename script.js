@@ -253,8 +253,7 @@ window.onload = async()=>{
   await startCamera();
 
 };
-const statusBox =
-document.getElementById('status');
+
 
 function checkLogin(){
 
