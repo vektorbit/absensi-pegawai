@@ -248,6 +248,8 @@ user.nama;
 
 window.onload = async()=>{
 
+  checkLogin();
+
   await startCamera();
 
 };
