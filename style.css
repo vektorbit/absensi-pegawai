@@ -1,0 +1,76 @@
+body{
+  margin:0;
+  padding:0;
+  background:#f1f5f9;
+  font-family:Arial;
+}
+
+.container{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+  padding:20px;
+}
+
+.card{
+  background:white;
+  padding:25px;
+  width:100%;
+  max-width:450px;
+  border-radius:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.1);
+}
+
+h1{
+  text-align:center;
+  margin-bottom:20px;
+}
+
+input{
+  width:100%;
+  padding:14px;
+  margin-bottom:15px;
+  border-radius:10px;
+  border:1px solid #ddd;
+  box-sizing:border-box;
+}
+
+video{
+  width:100%;
+  border-radius:15px;
+  background:black;
+}
+
+canvas{
+  display:none;
+}
+
+button{
+  width:100%;
+  padding:15px;
+  border:none;
+  border-radius:12px;
+  margin-top:10px;
+  background:#16a34a;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+}
+
+button.danger{
+  background:#dc2626;
+}
+
+#status{
+  margin-top:20px;
+  text-align:center;
+}
+
+#challengeBox{
+  margin-top:15px;
+  margin-bottom:15px;
+  text-align:center;
+  font-weight:bold;
+  color:#d97706;
+}
