@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>Dashboard Absensi</title>
+
+  <link rel="stylesheet"
+        href="style.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="card">
+
+    <h1>DASHBOARD ABSENSI</h1>
+
+    <div class="userBox">
+
+      <div id="adminInfo"></div>
+
+      <button
+        class="logoutBtn"
+        onclick="logout()"
+      >
+        LOGOUT
+      </button>
+
+    </div>
+
+    <input
+      type="date"
+      id="filterTanggal"
+    >
+
+    <button onclick="loadAbsensi()">
+      FILTER
+    </button>
+
+    <div id="statistik"></div>
+
+    <div id="tableBox"></div>
+
+  </div>
+
+</div>
+
+<script src="dashboard.js"></script>
+
+</body>
+</html>
