@@ -1,11 +1,64 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Absensi Pegawai</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <script defer src="https://unpkg.com/face-api.js@0.22.2/dist/face-api.min.js"></script>
+
 </head>
+
 <body>
 
-<h1>ABSENSI PEGAWAI</h1>
+<div class="container">
+
+  <div class="card">
+
+    <h1>ABSENSI PEGAWAI</h1>
+
+    <input
+      type="text"
+      id="id"
+      placeholder="ID Pegawai"
+    >
+
+    <input
+      type="text"
+      id="nama"
+      placeholder="Nama Pegawai"
+    >
+
+    <video
+      id="video"
+      autoplay
+      playsinline
+      muted
+    ></video>
+
+    <canvas id="canvas"></canvas>
+
+    <div id="challengeBox"></div>
+
+    <button onclick="absen('MASUK')">
+      ABSEN MASUK
+    </button>
+
+    <button class="danger" onclick="absen('PULANG')">
+      ABSEN PULANG
+    </button>
+
+    <div id="status"></div>
+
+  </div>
+
+</div>
+
+<script src="script.js"></script>
 
 </body>
 </html>
