@@ -251,3 +251,43 @@ window.onload = async()=>{
   await startCamera();
 
 };
+const statusBox =
+document.getElementById('status');
+
+function checkLogin(){
+
+  const user =
+  JSON.parse(
+    localStorage.getItem(
+      'pegawai'
+    )
+  );
+
+  if(!user){
+
+    window.location =
+    'login.html';
+
+    return;
+  }
+
+  document.getElementById(
+    'userNama'
+  ).innerHTML =
+
+  `
+    <b>${user.nama}</b>
+    <br>
+    ${user.id}
+  `;
+}
+
+function logout(){
+
+  localStorage.removeItem(
+    'pegawai'
+  );
+
+  window.location =
+  'login.html';
+}
