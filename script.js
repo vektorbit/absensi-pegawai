@@ -39,7 +39,7 @@ async function startCamera(){
     console.error(err);
 
     showStatus(
-      'Kamera gagal',
+      'Kamera gagal diakses',
       'error'
     );
   }
@@ -80,7 +80,7 @@ function showStatus(
 }
 
 /****************************************
- * FOTO
+ * CAPTURE PHOTO
  ****************************************/
 
 function capturePhoto(){
@@ -103,7 +103,7 @@ function capturePhoto(){
 }
 
 /****************************************
- * ABSEN
+ * ABSENSI
  ****************************************/
 
 async function absen(status){
@@ -162,19 +162,12 @@ async function absen(status){
 
           console.log(data);
 
-         const response =
-await fetch(
-  GAS_URL,
-  {
-    method:'POST',
-
-    body:
-    JSON.stringify(data)
-  }
-);
-
-              body:
-              JSON.stringify(data)
+          const response =
+          await fetch(
+            GAS_URL,
+            {
+              method:'POST',
+              body:JSON.stringify(data)
             }
           );
 
@@ -218,7 +211,7 @@ await fetch(
         console.error(err);
 
         showStatus(
-          'GPS gagal',
+          'GPS gagal diakses',
           'error'
         );
       }
